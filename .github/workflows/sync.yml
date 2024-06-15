@@ -18,10 +18,27 @@ jobs:
         # 获取最新的 release 页面内容
         release_url="https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/latest"
         release_page=$(curl -sL $release_url)
+        
         # 提取最新的文件名
         file_url=$(echo "$release_page" | grep -oP 'https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/download/[^"]+zhwiki-[0-9]+\.dict\.yaml' | head -n 1)
+        
+        # 检查是否找到文件 URL
+        if [ -z "$file_url" ]; then
+          echo "Error: Could not find the zhwiki dict URL."
+          exit 1
+        fi
+        
+        echo "Downloading from URL: $file_url"
+        
         # 下载并重命名文件
         wget $file_url -O zhwiki.dict.yaml
+        
+        # 检查文件是否下载成功
+        if [ ! -f "zhwiki.dict.yaml" ]; then
+          echo "Error: File download failed."
+          exit 1
+        fi
+        
         # 添加到 git
         git add zhwiki.dict.yaml
 
