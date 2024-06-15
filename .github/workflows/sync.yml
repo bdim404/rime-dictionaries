@@ -44,6 +44,14 @@ jobs:
         # 添加到 git
         git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml cn_dicts/zhwiki.dict.yaml
 
+    - name: Sync luna dict
+      run: |
+        # 克隆仓库
+        git clone https://github.com/rime/rime-luna-pinyin.git
+        cp  rime-luna-pinyin/luna_pinyin.dict.yaml cn_dicts/
+        rm -rf rime-luna-pinyin
+        git add cn_dicts/luna_pinyin.dict.yaml
+        
     - name: Commit changes
       run: |
         git config --global user.name "bdim404"
