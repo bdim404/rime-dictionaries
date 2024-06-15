@@ -15,10 +15,13 @@ jobs:
 
     - name: Download latest zhwiki.dict.yaml
       run: |
-        # 获取最新的 release
-        latest_release=$(curl -s https://api.github.com/repos/felixonmars/fcitx5-pinyin-zhwiki/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+        # 获取最新的 release 页面内容
+        release_url="https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/latest"
+        release_page=$(curl -sL $release_url)
+        # 提取最新的文件名
+        file_url=$(echo "$release_page" | grep -oP 'https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/download/[^"]+zhwiki-[0-9]+\.dict\.yaml' | head -n 1)
         # 下载并重命名文件
-        wget https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/download/$latest_release/zhwiki-20240509.dict.yaml -O zhwiki.dict.yaml
+        wget $file_url -O zhwiki.dict.yaml
         # 添加到 git
         git add zhwiki.dict.yaml
 
@@ -41,4 +44,3 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git commit -m "Sync latest dictionaries"
         git push origin main
-
