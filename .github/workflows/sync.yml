@@ -12,7 +12,23 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      
+    - name: Download latest zhwiki.dict.yaml
+      id: download_zhwiki
+      uses: robinraju/release-downloader@v1.10
+      with:
+        repository: 'felixonmars/fcitx5-pinyin-zhwiki'
+        latest: true
+        fileName: '*.dict.yaml'
+        out-file-path: '.'
+    
+    - name: Use downloaded file name
+      run: echo "Downloaded file: ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files)[0] }}"
 
+        
+    - name: Rename zhwiki.dict.yaml
+      run: mv ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files)[0] }} zhwiki.dict.yaml
+      
     - name: Sync specific files from rime-ice
       run: |
         # 克隆 rime-ice 仓库
@@ -23,10 +39,11 @@ jobs:
         cp rime-ice/cn_dicts/base.dict.yaml cn_dicts/
         cp rime-ice/cn_dicts/ext.dict.yaml cn_dicts/
         cp rime-ice/cn_dicts/tencent.dict.yaml cn_dicts/
+        cp zhwiki.dict.yaml cn_dicts/
         # 删除克隆的仓库
         rm -rf rime-ice
         # 添加到 git
-        git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml
+        git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml cn_dicts/zhwiki.dict.yaml
 
     - name: Commit changes
       run: |
