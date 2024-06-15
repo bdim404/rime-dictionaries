@@ -4,9 +4,9 @@ version: "20240616"
 sort: by_weight
 use_preset_vocabulary: true
 import_tables:
-  - tencent
-  - base
-  - luna_pinyin
-  - zhwiki
-  - ext
+  - cn_dicts/tencent
+  - cn_dicts/base
+  - cn_dicts/luna_pinyin
+  - cn_dicts/zhwiki
+  - cn_dicts/ext
 ...
