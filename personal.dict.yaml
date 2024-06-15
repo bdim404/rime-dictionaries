@@ -1,0 +1,12 @@
+---
+name: personal
+version: "20240616"
+sort: by_weight
+use_preset_vocabulary: true
+import_tables:
+  - tencent
+  - base
+  - luna_pinyin
+  - zhwiki
+  - ext
+...
