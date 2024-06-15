@@ -17,6 +17,8 @@ jobs:
       run: |
         # 克隆 rime-ice 仓库
         git clone https://github.com/iDvel/rime-ice.git
+        # 创建 cn_dicts 目录，如果不存在
+        mkdir -p cn_dicts
         # 复制所需文件
         cp rime-ice/cn_dicts/base.dict.yaml cn_dicts/
         cp rime-ice/cn_dicts/ext.dict.yaml cn_dicts/
@@ -31,4 +33,9 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git commit -m "Sync latest dictionaries"
-        git push origin main
+
+    - name: Push changes
+      env:
+        PAT: ${{ secrets.PAT }}
+      run: |
+        git push https://$PAT@github.com/你的用户名/rime-dictionaries.git HEAD:main
