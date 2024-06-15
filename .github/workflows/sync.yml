@@ -38,4 +38,4 @@ jobs:
       env:
         PAT: ${{ secrets.PAT }}
       run: |
-        git push https://$PAT@github.com/你的用户名/rime-dictionaries.git HEAD:main
+        git push https://$PAT@github.com/bdim404/rime-dictionaries.git HEAD:main
