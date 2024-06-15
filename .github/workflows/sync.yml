@@ -19,6 +19,10 @@ jobs:
         release_url="https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/latest"
         release_page=$(curl -sL $release_url)
         
+        # 打印 release 页面内容进行调试
+        echo "Release page content:"
+        echo "$release_page"
+        
         # 提取最新的文件名
         file_url=$(echo "$release_page" | grep -oP 'https://github.com/felixonmars/fcitx5-pinyin-zhwiki/releases/download/[^"]+zhwiki-[0-9]+\.dict\.yaml' | head -n 1)
         
