@@ -51,6 +51,12 @@ jobs:
         cp  rime-luna-pinyin/luna_pinyin.dict.yaml cn_dicts/
         rm -rf rime-luna-pinyin
         git add cn_dicts/luna_pinyin.dict.yaml
+
+    - name: Update version in personal.dict.yaml
+      run: |
+          sed -i "s/version: \"[0-9]\{8\}\"/version: \"$(date +%Y%m%d)\"/" personal.dict.yaml
+          git add personal.dict.yaml
+ 
         
     - name: Commit changes
       run: |
