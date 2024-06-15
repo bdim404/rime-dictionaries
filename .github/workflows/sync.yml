@@ -30,13 +30,13 @@ jobs:
 
     - name: Commit changes
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "bdim404"
+        git config --global user.email "i@bdim.moe"
         git commit -m "Sync latest dictionaries"
 
     - name: Push changes
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
       run: |
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/bdim404/rime-dictionaries.git
+        git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/bdim404/rime-dictionaries.git
         git push origin main
