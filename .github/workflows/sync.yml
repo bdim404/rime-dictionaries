@@ -23,8 +23,7 @@ jobs:
         out-file-path: '.'
     
     - name: Use downloaded file name
-      run: echo "Downloaded file: ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files)[0] }}"
-
+      run: echo ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files)[0] }}
         
     - name: Rename zhwiki.dict.yaml
       run: mv ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files)[0] }} zhwiki.dict.yaml
