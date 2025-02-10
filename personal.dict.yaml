@@ -1,6 +1,6 @@
 ---
 name: personal
-version: "20250209"
+version: "20250210"
 sort: by_weight
 use_preset_vocabulary: true
 import_tables:
