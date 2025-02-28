@@ -83,17 +83,19 @@ jobs:
         cp default.custom.yaml luna_pinyin.custom.yaml personal.dict.yaml rime/
         cp -r cn_dicts/ rime/
         tar -czf rime-dictionaries.tar.gz -C rime .
-
+        
     - name: Create a new tag
       run: |
         # 创建一个标签，使用当前日期或其他唯一标识
         TAG_NAME="release-$(date +%Y%m%d%H%M)"
+        echo "Created tag name: $TAG_NAME"  # 输出标签名称，用于调试
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
-      
+
     - name: Checkout the new tag
       run: |
-        # 切换到刚创建的标签
+        # 打印 TAG_NAME 变量，确保它不为空
+        echo "Checking out tag: $TAG_NAME"
         git checkout "$TAG_NAME"
 
     - name: Upload to GitHub Releases
@@ -104,3 +106,4 @@ jobs:
       env:
         LATEST_FILE: /home/runner/work/rime-dictionaries/rime-dictionaries/zhwiki-20240509.dict.yaml
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
