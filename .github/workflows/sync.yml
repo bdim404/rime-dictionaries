@@ -22,18 +22,21 @@ jobs:
         fileName: '*.dict.yaml'
         out-file-path: '/home/runner/work/rime-dictionaries/rime-dictionaries'
 
+    - name: Check downloaded files output
+      run: |
+        echo "Downloaded files: ${{ steps.download_zhwiki.outputs.downloaded_files }}"
+        
     - name: Use downloaded file name
       run: |
-        # 获取下载的文件名
-        echo "Downloaded files: ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files) }}"
-        # 只选择最新下载的文件
-        latest_file=$(echo ${{ fromJson(steps.download_zhwiki.outputs.downloaded_files) }} | jq '.[0]')
+        # 获取以逗号分隔的文件路径字符串
+        downloaded_files="${{ steps.download_zhwiki.outputs.downloaded_files }}"
+        # 将文件路径按逗号分割，并选择最新的文件
+        latest_file=$(echo $downloaded_files | tr ',' '\n' | sort -r | head -n 1)
         echo "Latest file is: $latest_file"
         echo "LATEST_FILE=$latest_file" >> $GITHUB_ENV
         
     - name: Rename zhwiki.dict.yaml
       run: |
-        # 使用环境变量来获取最新的文件名并重命名
         mv ${{ env.LATEST_FILE }} zhwiki.dict.yaml
         
     - name: Sync specific files from rime-ice
