@@ -10,9 +10,9 @@ URL="https://api.bdim.moe/magic/https://github.com/bdim404/rime-dictionaries/rel
 echo "正在下载 rime-dictionaries 文件..."
 curl -L "$URL" -o rime-dictionaries.tar.gz
 
-# 解压缩下载的 tar.gz 文件到 Rime 目录
+# 解压缩下载的 tar.gz 文件到 Rime 目录 将 $username 更改为你的实际用户名。
 echo "正在解压文件到 Rime 目录..."
-tar -zxvf rime-dictionaries.tar.gz -C /Users/bdim404/Library/Rime
+tar -zxvf rime-dictionaries.tar.gz -C /Users/$username/Library/Rime
 
 # 清理下载的 tar.gz 文件
 rm rime-dictionaries.tar.gz
