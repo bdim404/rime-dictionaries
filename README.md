@@ -22,3 +22,4 @@ How to use on Debian:
 ```shell
 curl -sS https://api.bdim.moe/rime-deploy | bash
 ```
+Or, you can just run [script](https://github.com/bdim404/rime-dictionaries/blob/main/rime-deploy.sh).
