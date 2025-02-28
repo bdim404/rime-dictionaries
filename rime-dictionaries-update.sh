@@ -19,4 +19,4 @@ tar -zxvf rime-dictionaries.tar.gz -C ~/.local/share/fcitx5/rime
 # 清理下载的 tar.gz 文件
 rm rime-dictionaries.tar.gz
 
-echo "安装和配置完成。"
+echo "字典更新完成！"
