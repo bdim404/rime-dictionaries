@@ -61,6 +61,7 @@ jobs:
       run: |
         git config --global user.name "bdim404"
         git config --global user.email "i@bdim.moe"
+        git add .
         git commit -m "Sync latest dictionaries"
 
     - name: Push changes
