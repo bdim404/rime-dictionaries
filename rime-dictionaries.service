@@ -1,0 +1,6 @@
+[Unit]
+Description=RIME Dictionaries Update Service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/rime-dictionaries-update.sh
