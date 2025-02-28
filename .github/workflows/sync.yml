@@ -76,7 +76,8 @@ jobs:
         # 创建打包目录
         mkdir -p rime
         # 将所需文件复制到 rime 目录
-        cp default.custom.yaml luna_pinyin.custom.yaml personal.dict.yaml cn_dicts/ rime/
+        cp default.custom.yaml luna_pinyin.custom.yaml personal.dict.yaml rime/
+        cp -r cn_dicts/ rime/  # 使用 -r 参数递归复制整个目录
         # 打包为 tar 文件
         tar -czf rime-dictionaries.tar.gz -C rime .
     
