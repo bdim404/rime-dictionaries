@@ -87,8 +87,9 @@ jobs:
     - name: Create a new tag
       run: |
         # 创建一个标签，使用当前日期或其他唯一标识
-        git tag "release-$(date +%Y%m%d%H%M)"
-        git push origin "release-$(date +%Y%m%d%H%M)"
+        TAG_NAME="release-$(date +%Y%m%d%H%M)"
+        git tag "$TAG_NAME"
+        git push origin "$TAG_NAME"
 
     - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
