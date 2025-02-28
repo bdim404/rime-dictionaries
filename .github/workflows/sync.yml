@@ -90,6 +90,11 @@ jobs:
         TAG_NAME="release-$(date +%Y%m%d%H%M)"
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
+      
+    - name: Checkout the new tag
+      run: |
+        # 切换到刚创建的标签
+        git checkout "$TAG_NAME"
 
     - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
