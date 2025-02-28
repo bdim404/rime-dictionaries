@@ -84,9 +84,17 @@ jobs:
         cp -r cn_dicts/ rime/
         tar -czf rime-dictionaries.tar.gz -C rime .
 
-    - name: Upload tar file as release asset
+    - name: Create a new tag
+      run: |
+        # 创建一个标签，使用当前日期或其他唯一标识
+        git tag "release-$(date +%Y%m%d%H%M)"
+        git push origin "release-$(date +%Y%m%d%H%M)"
+
+    - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
       with:
         files: rime-dictionaries.tar.gz
+        token: ${{ secrets.GITHUB_TOKEN }}
       env:
+        LATEST_FILE: /home/runner/work/rime-dictionaries/rime-dictionaries/zhwiki-20240509.dict.yaml
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
