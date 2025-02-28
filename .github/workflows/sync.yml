@@ -87,7 +87,7 @@ jobs:
     - name: Create tag and upload to GitHub Releases
       run: |
         # 创建标签
-        TAG_NAME="release-$(date +%Y%m%d%H%M)"
+        TAG_NAME="release-$(date +%Y%m%d)"
         echo "Created tag name: $TAG_NAME"  # 输出标签名称，用于调试
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
