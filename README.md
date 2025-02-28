@@ -19,9 +19,14 @@ git remote add origin https://github.com/bdim404/rime-dictionaries.git
 ```shell
 git pull origin main
 ```
+### ShortCuts
+
+Creat a new shortcuts and search "run shell script."
+
+Paste the [script](./macOS-shortcut.sh) and test.
 
 ## How to use on Debian:
 ```shell
 curl -sS https://api.bdim.moe/rime-deploy | bash
 ```
-Or, you can just run [script](https://github.com/bdim404/rime-dictionaries/blob/main/rime-deploy.sh).
+Or, you can just run [script](./rime-deploy.sh).
