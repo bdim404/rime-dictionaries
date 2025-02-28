@@ -19,7 +19,7 @@ git remote add origin https://github.com/bdim404/rime-dictionaries.git
 ```shell
 git pull origin main
 ```
-### ShortCuts
+### ShortCuts - Auto update dictionaries
 
 Creat a new shortcuts and search "run shell script."
 
@@ -30,3 +30,5 @@ Paste the [script](./macOS-shortcut.sh) and test.
 curl -sS https://api.bdim.moe/rime-deploy | bash
 ```
 Or, you can just run [script](./rime-deploy.sh).
+
+The script also can use to update dictionaries.
