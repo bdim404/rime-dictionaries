@@ -89,6 +89,7 @@ jobs:
         # 创建一个标签，使用当前日期或其他唯一标识
         TAG_NAME="release-$(date +%Y%m%d%H%M)"
         echo "Created tag name: $TAG_NAME"  # 输出标签名称，用于调试
+        if [ -z "$TAG_NAME" ]; then echo "TAG_NAME is empty!"; exit 1; fi  # 检查标签名称是否为空
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
 
@@ -96,6 +97,7 @@ jobs:
       run: |
         # 打印 TAG_NAME 变量，确保它不为空
         echo "Checking out tag: $TAG_NAME"
+        if [ -z "$TAG_NAME" ]; then echo "TAG_NAME is empty!"; exit 1; fi  # 检查标签名称是否为空
         git checkout "$TAG_NAME"
 
     - name: Upload to GitHub Releases
@@ -106,4 +108,3 @@ jobs:
       env:
         LATEST_FILE: /home/runner/work/rime-dictionaries/rime-dictionaries/zhwiki-20240509.dict.yaml
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
