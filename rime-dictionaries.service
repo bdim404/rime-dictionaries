@@ -3,4 +3,9 @@ Description=RIME Dictionaries Update Service
 
 [Service]
 Type=oneshot
+User=yourusername
+Group=yourusername
 ExecStart=/usr/local/bin/rime-dictionaries-update.sh
+
+[Install]
+WantedBy=multi-user.target
