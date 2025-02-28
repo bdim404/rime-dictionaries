@@ -31,7 +31,7 @@ jobs:
         # 获取以逗号分隔的文件路径字符串
         downloaded_files="${{ steps.download_zhwiki.outputs.downloaded_files }}"
         # 将文件路径按逗号分割，并选择最新的文件
-        latest_file=$(echo $downloaded_files | tr ',' '\n' | sort -r | head -n 1)
+        latest_file=$(echo $downloaded_files | tr ',' '\n' | sort -r | head -n 1 | xargs)
         echo "Latest file is: $latest_file"
         echo "LATEST_FILE=$latest_file" >> $GITHUB_ENV
         
