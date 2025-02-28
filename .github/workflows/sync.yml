@@ -56,7 +56,6 @@ jobs:
       run: |
           sed -i "s/version: \"[0-9]\{8\}\"/version: \"$(date +%Y%m%d)\"/" personal.dict.yaml
           git add personal.dict.yaml
- 
         
     - name: Commit changes
       run: |
@@ -70,3 +69,19 @@ jobs:
       run: |
         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/bdim404/rime-dictionaries.git
         git push origin main
+
+    - name: Package dictionaries into a tar file
+      run: |
+        # 创建打包目录
+        mkdir -p rime
+        # 将所需文件复制到 rime 目录
+        cp default.custom.yaml luna_pinyin.custom.yaml personal.dict.yaml cn_dicts/ rime/
+        # 打包为 tar 文件
+        tar -czf rime-dictionaries.tar.gz -C rime .
+    
+    - name: Upload tar file as release asset
+      uses: softprops/action-gh-release@v1
+      with:
+        files: rime-dictionaries.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 用于上传 release 文件的 Token
