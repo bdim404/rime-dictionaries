@@ -84,27 +84,16 @@ jobs:
         cp -r cn_dicts/ rime/
         tar -czf rime-dictionaries.tar.gz -C rime .
         
-    - name: Create a new tag
+    - name: Create tag and upload to GitHub Releases
       run: |
+        # 创建标签
         TAG_NAME="release-$(date +%Y%m%d%H%M)"
         echo "Created tag name: $TAG_NAME"  # 输出标签名称，用于调试
-        TAG_NAME=$(echo "$TAG_NAME" | xargs)  # 清理空格
-        echo "Final tag name: $TAG_NAME"  # 再次输出，确保没有空格
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
     
-    - name: Checkout the new tag
-      run: |
-        echo "Checking out tag: $TAG_NAME"
-        git tag  # 输出所有标签，确认标签已成功创建
-        git checkout "$TAG_NAME"
-
-
-    - name: Upload to GitHub Releases
-      uses: marvinpinto/action-automatic-releases@latest
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        automatic_release_tag: "$TAG_NAME"
-        prerelease: true
-        title: "Automated Release $(date +%Y%m%d)"
-        files: rime-dictionaries.tar.gz
+        # 上传到 GitHub Releases
+        echo "Uploading to GitHub Releases with tag: $TAG_NAME"
+        gh release create "$TAG_NAME" rime-dictionaries.tar.gz --title "Automated Release $(date +%Y%m%d)" --notes "Automated release created on $(date)"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
