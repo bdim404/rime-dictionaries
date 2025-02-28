@@ -1,6 +1,6 @@
 # rime-dictionaries
 
-How to use:
+How to use on macOS:
 
 ```shell
 cd ./Rime
@@ -16,4 +16,9 @@ git remote add origin https://github.com/bdim404/rime-dictionaries.git
 
 ```shell
 git pull origin main
+```
+
+How to use on Debian:
+```shell
+curl -sS https://api.bdim.moe/rime-deploy | bash
 ```
