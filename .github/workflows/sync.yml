@@ -101,10 +101,10 @@ jobs:
         git checkout "$TAG_NAME"
 
     - name: Upload to GitHub Releases
-      uses: softprops/action-gh-release@v1
+      uses: marvinpinto/action-automatic-releases@latest
       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        automatic_release_tag: "$TAG_NAME"
+        prerelease: true
+        title: "Automated Release $(date +%Y%m%d)"
         files: rime-dictionaries.tar.gz
-        token: ${{ secrets.GITHUB_TOKEN }}
-      env:
-        LATEST_FILE: /home/runner/work/rime-dictionaries/rime-dictionaries/zhwiki-20240509.dict.yaml
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
