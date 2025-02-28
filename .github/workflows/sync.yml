@@ -61,8 +61,10 @@ jobs:
       run: |
         git config --global user.name "bdim404"
         git config --global user.email "i@bdim.moe"
+        # 确保所有更改的文件都被添加到暂存区
         git add .
-        git commit -m "Sync latest dictionaries"
+        git status  # 检查暂存区的文件状态
+        git commit -m "Sync latest dictionaries" || echo "No changes to commit"  # 如果没有更改，跳过 commit
 
     - name: Push changes
       env:
