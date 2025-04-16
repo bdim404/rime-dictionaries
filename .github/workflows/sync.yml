@@ -60,7 +60,7 @@ jobs:
     - name: Update version in bdim.dict.yaml
       run: |
           sed -i "s/version: \"[0-9]\{8\}\"/version: \"$(date +%Y%m%d)\"/" bdim.dict.yaml
-          git add personal.dict.yaml
+          git add bdim.dict.yaml
         
     - name: Commit changes
       run: |
@@ -80,7 +80,7 @@ jobs:
     - name: Package dictionaries into a tar file
       run: |
         mkdir -p rime
-        cp default.custom.yaml luna_pinyin.custom.yaml personal.dict.yaml rime/
+        cp default.custom.yaml luna_pinyin.custom.yaml bdim.dict.yaml rime/
         cp -r cn_dicts/ rime/
         tar -czf rime-dictionaries.tar.gz -C rime .
         
