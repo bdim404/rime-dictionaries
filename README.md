@@ -2,6 +2,8 @@
 
 Bdim's personal rime dictionaries repo.
 
+You should read the [blog](https://blog.bdim.moe/zh/posts/2025-2-28) first!
+
 ## How to use on macOS:
 
 ```shell
