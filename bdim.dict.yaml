@@ -1,6 +1,6 @@
 ---
 name: bdim
-version: "20251212"
+version: "20251213"
 sort: by_weight
 use_preset_vocabulary: true
 import_tables:
