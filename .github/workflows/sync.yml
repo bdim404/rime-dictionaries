@@ -50,7 +50,7 @@ jobs:
         cp rime-ice/cn_dicts/tencent.dict.yaml cn_dicts/
         mv zhwiki.dict.yaml cn_dicts/
         rm -rf rime-ice
-        rm -f zhwiki*.dict.yaml web-slang*.dict.yaml
+        rm -f zhwiki*.dict.yaml zhwikt*.dict.yaml web-slang*.dict.yaml
         git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml
 
     - name: Sync luna dict
