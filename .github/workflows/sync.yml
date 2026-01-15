@@ -2,8 +2,8 @@ name: Sync Dictionaries
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天运行一次
-  workflow_dispatch: # 手动触发
+    - cron: '0 0 * * *' # Run daily at midnight UTC
+  workflow_dispatch: # Manual trigger
 
 jobs:
   update:
@@ -28,9 +28,9 @@ jobs:
         
     - name: Use downloaded file name
       run: |
-        # 获取以逗号分隔的文件路径字符串
+        # Get comma-separated file path string
         downloaded_files="${{ steps.download_zhwiki.outputs.downloaded_files }}"
-        # 将文件路径按逗号分割，并选择最新的文件
+        # Split file paths by comma and select the latest file
         latest_file=$(echo $downloaded_files | tr ',' '\n' | sort -r | head -n 1 | tr -d '[]' | xargs)
         echo "Latest file is: $latest_file"
         echo "LATEST_FILE=$latest_file" >> $GITHUB_ENV
@@ -47,8 +47,9 @@ jobs:
         cp rime-ice/cn_dicts/ext.dict.yaml cn_dicts/
         cp rime-ice/cn_dicts/tencent.dict.yaml cn_dicts/
         mv zhwiki.dict.yaml cn_dicts/
-        rm -rf rime-ice zhwiki-*.dict.yaml
-        git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml cn_dicts/zhwiki.dict.yaml
+        rm -rf rime-ice
+        rm -f zhwiki*.dict.yaml web-slang*.dict.yaml
+        git add cn_dicts/base.dict.yaml cn_dicts/ext.dict.yaml cn_dicts/tencent.dict.yaml
 
     - name: Sync luna dict
       run: |
@@ -86,14 +87,48 @@ jobs:
         
     - name: Create tag and upload to GitHub Releases
       run: |
-        # 创建标签
+        # Create tag
         TAG_NAME="release-$(date +%Y%m%d)"
-        echo "Created tag name: $TAG_NAME"  # 输出标签名称，用于调试
+        echo "Created tag name: $TAG_NAME"  # Output tag name for debugging
         git tag "$TAG_NAME"
         git push origin "$TAG_NAME"
-    
-        # 上传到 GitHub Releases
+
+        # Upload to GitHub Releases
         echo "Uploading to GitHub Releases with tag: $TAG_NAME"
         gh release create "$TAG_NAME" rime-dictionaries.tar.gz --title "Automated Release $(date +%Y%m%d)" --notes "Automated release created on $(date)"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clean up old releases
+      run: |
+        # Get all release tags sorted by date (newest first)
+        ALL_TAGS=$(git tag -l 'release-*' | sort -r)
+
+        # Count total releases
+        TOTAL_COUNT=$(echo "$ALL_TAGS" | wc -l)
+
+        # If we have more than 10 releases, delete the old ones
+        if [ "$TOTAL_COUNT" -gt 10 ]; then
+          # Get tags to delete (skip first 10, delete the rest)
+          TAGS_TO_DELETE=$(echo "$ALL_TAGS" | tail -n +11)
+
+          echo "Total releases: $TOTAL_COUNT"
+          echo "Keeping latest 10, deleting $((TOTAL_COUNT - 10)) old releases"
+
+          # Delete each old release and its tag
+          for TAG in $TAGS_TO_DELETE; do
+            echo "Deleting release and tag: $TAG"
+            # Delete the release (ignore errors if release doesn't exist)
+            gh release delete "$TAG" --yes 2>/dev/null || true
+            # Delete the tag from remote
+            git push origin --delete "$TAG" 2>/dev/null || true
+            # Delete local tag
+            git tag -d "$TAG" 2>/dev/null || true
+          done
+
+          echo "Cleanup complete. Kept 10 most recent releases."
+        else
+          echo "Currently have $TOTAL_COUNT releases. No cleanup needed (keeping all, threshold is 10)."
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,3 +3,5 @@ personal.userdb/
 sync/
 installation.yaml
 user.yaml
+web-slang-*.dict.yaml
+zhwiki*.dict.yaml
