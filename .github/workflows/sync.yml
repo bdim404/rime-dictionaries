@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
       
     - name: Download latest zhwiki.dict.yaml
       id: download_zhwiki
@@ -101,6 +103,9 @@ jobs:
 
     - name: Clean up old releases
       run: |
+        # Fetch all tags from remote
+        git fetch --tags --force
+
         # Get all release tags sorted by date (newest first)
         ALL_TAGS=$(git tag -l 'release-*' | sort -r)
 
