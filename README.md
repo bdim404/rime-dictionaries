@@ -6,7 +6,9 @@ Bdim's personal rime dictionaries repo.
 
 ## How to use on macOS
 
-Create a new Shortcut, add a "Run Shell Script" action, and paste the content of [macOS-shortcut.sh](./macOS-shortcut.sh). Place it on your desktop or Dock for one-click dictionary updates.
+**One-click update:** create a new Shortcut, add a "Run Shell Script" action, and paste the content of [macOS-shortcut.sh](./macOS-shortcut.sh).
+
+**Automatic updates:** schedule the script with launchd. Create `~/Library/LaunchAgents/com.yourname.rime-dicts.plist` pointing to the script and load it with `launchctl load`.
 
 ## How to use on Debian
 
